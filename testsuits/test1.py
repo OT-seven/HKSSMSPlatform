@@ -5,6 +5,7 @@ from framework.read_config import Read_config
 from framework.browser_engine import Browser_Engine
 from selenium import webdriver
 from testsuits.test import Code
+import time
 
 logger = Logger(logger='Test').getlogger()
 
@@ -16,4 +17,8 @@ d.get('http://10.1.2.194:4029/hkssms/login.jsp')
 code = Code(d)
 # code.textcode()
 # code.textcode('//*[@id="validationCode_img"]')
-code.imege()
+num = code.imege()
+time.sleep(2)
+d.find_element_by_xpath('//*[@id="validationCode"]').send_keys(num)
+time.sleep(5)
+d.quit()

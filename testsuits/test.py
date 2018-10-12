@@ -8,7 +8,10 @@ sys.path.append('D:\\Program Files (x86)\\Lib\\site-packages')
 from selenium import webdriver
 import pytesseract
 import time
-from PIL import Image, ImageEnhance
+from PIL import Image
+from framework.logger import Logger
+
+logger = Logger(logger='Code').getlogger()
 
 class Code():
     def __init__(self,dr):
@@ -50,7 +53,9 @@ class Code():
         frame5=i.crop(rangle)  #使用Image的crop函数，从截图中再次截取我们需要的区域
         frame5.save('E://captchaImg.png')
         qq=Image.open('E://captchaImg.png')
+        time.sleep(5)
         text=pytesseract.image_to_string(qq)#.strip() #使用image_to_string识别验证码
-        text=text[0:4]
-        print (text)
-        return text
+        text1=text[0:4]
+        print (text1)
+        logger.info(text1)
+        return text1
