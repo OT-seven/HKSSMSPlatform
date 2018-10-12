@@ -55,7 +55,19 @@ class Code():
         qq=Image.open('E://captchaImg.png')
         time.sleep(5)
         text=pytesseract.image_to_string(qq)#.strip() #使用image_to_string识别验证码
-        text1=text[0:4]
-        print (text1)
-        logger.info(text1)
-        return text1
+        # text1=text[0:4]
+        print (text)
+        logger.info(text)
+        return text
+    def Image1(self):
+        qq = Image.open('E://captchaImg.png')
+        time.sleep(5)
+        text = pytesseract.image_to_string(qq)  # .strip() #使用image_to_string识别验证码
+        text = text[0:4]
+        print (text)
+        return text
+if __name__=='__main__':
+    # driver = WebDriver.GetWebdriver()
+    # dr = driver.GetdriverO()
+    image=Code('')
+    image.Image1()
