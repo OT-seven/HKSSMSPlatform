@@ -70,7 +70,7 @@ class Code():
     def image1(self):
         qq = Image.open('E://captchaImg.jpg')
         time.sleep(2)
-        text = pytesseract.image_to_string(qq)  # .strip() #使用image_to_string识别验证码
+        text = pytesseract.image_to_string(qq).strip()  # .strip() #使用image_to_string识别验证码
         text = text[0:4]
         print (text)
         return text

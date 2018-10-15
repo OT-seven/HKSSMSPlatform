@@ -24,7 +24,16 @@ class Code():
         rangle = (int(location['x']), int(location['y']), int(location['x'] + size['width']), int(location['y'] + size['height']))  # 写成我们需要截取的位置坐标
         i = Image.open('E://Img.png')  # 打开截图
         frame = i.crop(rangle)  # 使用Image的crop函数，从截图中再次截取我们需要的区域
-        frame = frame.convert('RGB')  # 图像加强，二值化，PIL中有九种不同模式。分别为1，L，P，RGB，RGBA，CMYK，YCbCr，I，F。L为灰度图像
+        frame = frame.convert('L')  # 图像加强，二值化，PIL中有九种不同模式。分别为1，L，P，RGB，RGBA，CMYK，YCbCr，I，F。L为灰度图像
+        sharpness = ImageEnhance.Contrast(frame)  # 对比度增强
+        frame = sharpness.enhance(4.0)   # 4.0为图像的饱和度
         frame.save('E://captchaImg.jpg') # 保存处理后的图片
         qq = Image.open('E://captchaImg.jpg')  # 打开处理过的图片
-        imgry= qq.convert('L')
+        time.sleep(2)
+        text = pytesseract.image_to_string(qq).strip()  # 使用image_to_string识别验证码
+        text = text[0:4]
+        logger.info(text)
+        return text
+    def testimg(self):
+        qq = Image.open('E://captchaImg.jpg')
+
