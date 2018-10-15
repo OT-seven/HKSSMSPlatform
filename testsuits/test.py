@@ -8,7 +8,7 @@ sys.path.append('D:\\Program Files (x86)\\Lib\\site-packages')
 from selenium import webdriver
 import pytesseract
 import time
-from PIL import Image
+from PIL import Image, ImageEnhance
 from framework.logger import Logger
 
 logger = Logger(logger='Code').getlogger()
@@ -43,7 +43,7 @@ class Code():
         text = text[0:4]
         print (text)
         return text
-    def imege(self):
+    def image(self):
         self.dr.save_screenshot('E://Img.png')  #截取当前网页需要的验证码
         imgelement = self.dr.find_element_by_xpath('//*[@id="validationCode_img"]')  #定位验证码
         location = imgelement.location  #获取验证码x,y轴坐标
@@ -51,17 +51,25 @@ class Code():
         rangle=(int(location['x']),int(location['y']),int(location['x']+size['width']),int(location['y']+size['height'])) #写成我们需要截取的位置坐标
         i=Image.open("E://Img.png") #打开截图
         frame5=i.crop(rangle)  #使用Image的crop函数，从截图中再次截取我们需要的区域
-        frame5.save('E://captchaImg.png')
-        qq=Image.open('E://captchaImg.png')
-        time.sleep(5)
-        text=pytesseract.image_to_string(qq)#.strip() #使用image_to_string识别验证码
+        frame5 = frame5.convert('L')  # 图像加强，二值化，PIL中有九种不同模式。分别为1，L，P，RGB，RGBA，CMYK，YCbCr，I，F。L为灰度图像
+        sharpness = ImageEnhance.Contrast(frame5)  # 对比度增强
+        frame5 = sharpness.enhance(4.0)  # 3.0为图像的饱和度
+        frame5.save('E://captchaImg.jpg')  # 保存处理后的图片
+        qq=Image.open('E://captchaImg.jpg')  # 打开处理过的图片
+        # imgry = qq.convert('L')  # 图像加强，二值化，PIL中有九种不同模式。分别为1，L，P，RGB，RGBA，CMYK，YCbCr，I，F。L为灰度图像
+        # sharpness = ImageEnhance.Contrast(imgry)  # 对比度增强
+        # i3 = sharpness.enhance(4.0)  # 3.0为图像的饱和度
+        # i3.save("E:\\image_code.png")
+        # i4 = Image.open("E:\\image_code.png")
+        time.sleep(2)
+        text=pytesseract.image_to_string(qq).strip()#.strip() #使用image_to_string识别验证码
         # text1=text[0:4]
         print (text)
         logger.info(text)
         return text
-    def Image1(self):
-        qq = Image.open('E://captchaImg.png')
-        time.sleep(5)
+    def image1(self):
+        qq = Image.open('E://captchaImg.jpg')
+        time.sleep(2)
         text = pytesseract.image_to_string(qq)  # .strip() #使用image_to_string识别验证码
         text = text[0:4]
         print (text)
@@ -70,4 +78,5 @@ if __name__=='__main__':
     # driver = WebDriver.GetWebdriver()
     # dr = driver.GetdriverO()
     image=Code('')
-    image.Image1()
+    image.image1()
+    print(image.image1())
