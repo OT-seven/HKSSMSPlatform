@@ -14,11 +14,10 @@ class Login(Base_page):
     def __init__(self, driver):
         self.driver = driver
     def login(self):
-        date = Read_config()
-        accountname = date.read_account('accountname')
-        password = date.read_password('pwd')
+        accountname = Read_config.read_account('accountname')
         self.type(self.accountname_w, accountname)
+        password = Read_config.read_password('pwd')
         self.type(self.password_w, password)
-
-        time.sleep(5)
+        time.sleep(10)
         self.click(self.login_btn_w)
+        logger.info('click login btn')

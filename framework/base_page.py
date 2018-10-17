@@ -113,14 +113,14 @@ class Base_page(object):
             try:
                 element = self.driver.find_element_by_xpath(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 's' or selector_by == 'selector_selector':
             try:
                 element = self.driver.find_element_by_css_selector(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         else:
