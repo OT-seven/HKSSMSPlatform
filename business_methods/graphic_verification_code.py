@@ -12,7 +12,7 @@ from framework.logger import Logger
 
 logger = Logger(logger='Code').getlogger()
 
-class Code():
+class Code(object):
     def __init__(self, driver):
         self.driver = driver
 
@@ -34,6 +34,14 @@ class Code():
         text = text[0:4]
         logger.info(text)
         return text
-    def testimg(self):
-        qq = Image.open('E://captchaImg.jpg')
-
+    def testimg(self,img_path):
+        qq = Image.open(img_path)
+        time.sleep(2)
+        text = pytesseract.image_to_string(qq).strip()
+        text = text[0:4]
+        logger.info(text)
+        return text
+if __name__ == '__main__':
+    code = Code('')
+    text_code = code.testimg('E://captchaImg.jpg')
+    print(text_code)
