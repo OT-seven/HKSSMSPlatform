@@ -1,5 +1,5 @@
 # _*_ coding: utf - 8 _*_
-from hkssms_page.login import Login
+from hkssms_page.w_login import Login
 import unittest
 from framework.browser_engine import Browser_Engine
 from framework.logger import Logger
