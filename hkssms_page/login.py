@@ -3,7 +3,7 @@ from framework.logger import Logger
 from framework.read_config import Read_config
 from framework.base_page import Base_page
 import time
-
+from selenium.common.exceptions import NoAlertPresentException
 logger = Logger(logger='Login').getlogger()
 
 class Login(Base_page):
@@ -21,3 +21,16 @@ class Login(Base_page):
         time.sleep(10)
         self.click(self.login_btn_w)
         logger.info('click login btn')
+        time.sleep(2)
+        try:
+            alert = self.driver.switch_to.alert
+            if  alert:
+                print(alert.text)
+                logger.info(alert.text)
+                time.sleep(2)
+            else:
+                logger.info('没有获取到错误信息')
+            alert.accept()
+            logger.info('点击确定')
+        except NoAlertPresentException:
+            return False
