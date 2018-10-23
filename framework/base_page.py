@@ -71,42 +71,42 @@ class Base_page(object):
             try:
                 element = self.driver.find_element_by_id(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 'n' or selector_by == 'name':
             try:
                 element = self.driver.find_element_by_name(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 'c' or selector_by == 'class_name':
             try:
                 element = self.driver.find_element_by_class_name(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 'l' or selector_by == 'link_text':
             try:
                 element = self.driver.find_element_by_link_text(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 'p' or selector_by == 'partial_link_text':
             try:
                 element = self.driver.find_element_by_partial_link_text(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 't' or selector_by == 'tag_name':
             try:
                 element = self.driver.find_element_by_tag_name(selector_value)
                 logger.info("Had find the element \' %s \' seccessful"
-                            "by %s via value: %s " % (element.test, selector_by, selector_value))
+                            "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
                 logger.error("NoSuchElementException: %s" % e)
         elif selector_by == 'x' or selector_by == 'xpath':
@@ -115,7 +115,7 @@ class Base_page(object):
                 logger.info("Had find the element \' %s \' seccessful"
                             "by %s via value: %s " % (element.text, selector_by, selector_value))
             except NoSuchElementException as e:
-                logger.error("NoSuchElementException: %s" % e)
+                logger.error("NoSuchElementExcept: %s" % e)
         elif selector_by == 's' or selector_by == 'selector_selector':
             try:
                 element = self.driver.find_element_by_css_selector(selector_value)
@@ -129,6 +129,7 @@ class Base_page(object):
     # 文本输入
     def type(self, selector, text):
         el = self.find_element(selector)
+        logger.info('找到元素： %s' % el)
         el.clear()
         try:
             el.send_keys(text)
