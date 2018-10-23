@@ -4,16 +4,17 @@ from framework.read_config import Read_config
 from framework.base_page import Base_page
 import time
 from selenium.common.exceptions import NoAlertPresentException
-logger = Logger(logger='Login').getlogger()
 
-class Login(Base_page):
+logger = Logger(logger='W_Login').getlogger()
+
+class W_Login(Base_page):
     accountname_w = 'xpath=>//*[@id="uname"]'  # 用户名输入框
     password_w = 'xpath=>//*[@id="passwd"]'    # 密码输入框
     vct_code_w = 'xpath=>//*[@id="validationCode"]'  # 图形验证码输入框
     login_btn_w = 'xpath=>//*[@id="login"]'  # 登录按钮
     def __init__(self, driver):
         self.driver = driver
-    def login(self):
+    def w_login(self):
         accountname = Read_config.read_account('accountname')
         self.type(self.accountname_w, accountname)
         password = Read_config.read_password('pwd')
