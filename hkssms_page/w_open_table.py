@@ -18,7 +18,7 @@ class W_Open_table(Base_page):
         time.sleep(1)
         # iframe = self.driver.find_elements_by_tag_name("iframe")[1]
         # self.driver.switch_to.frame(iframe)
-        self.driver.switch_to.frame(1)
-        # self.driver.switch_to.frame(self.driver.find_element_by_xpath('//*[@id="cleverTabPanelItem-1540275308385"]/iframe')[0])
+        # self.driver.switch_to.frame(1)
+        self.driver.switch_to.frame(self.driver.find_element_by_xpath('//*[@src="BookingManagement/addBooking.jsp"]'))
         # self.driver.switch_to.frame('BookingManagement/addBooking.jsp')
         time.sleep(1)

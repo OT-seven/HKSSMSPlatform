@@ -3,6 +3,8 @@ from framework.logger import Logger
 from framework.base_page import Base_page
 import time
 
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import Select
 from data_create.awb_no import New_AwbNo
 from hkssms_page.w_open_table import W_Open_table
 
@@ -26,7 +28,7 @@ class W_Booking_By_Awb(Base_page):
     packingtype_w = 'xpath=>//*[@id="bzlx"]'  # 包装类型
     precision_packaging_w = 'xpath=>//*[@id="bzlx"]/option[3]'  # 精包装
     declaration_type_w = 'xpath=>//*[@id="kjbg"]'  # 报关方式
-    general_trade_w = 'xpath=>//*[@id="kjbg"]/option[2]'  # 一般贸易
+    general_trade_w = 'xpath=>//*[@id="kjbg"]/option[2]'  # 一般贸易  //*[@id="kjbg"]/option[2]  //*[@id="kjbg"]/option[2]
     memo_w = 'xpath=>//*[@id="bz"]'  # 备注
     ioee_w = 'xpath=>//*[@id="operation"]'  # 经营单位
     awb_save_w = 'xpath=>//*[@id="waybill-btn"]'  # 保存按钮
@@ -39,21 +41,21 @@ class W_Booking_By_Awb(Base_page):
     def w_booking_by_awb(self):
         table = W_Open_table(self.driver)
         table.w_open_table()
-        # self.click(self.booking_mgt_w)
-        # time.sleep(1)
-        # self.click(self.booking_by_awb_w)
-        # time.sleep(1)
-        # self.driver.switch_to.frame(0)
-        # self.click(self.close1)
-        # self.driver.switch_to.frame(self.driver.find_element_by_tag_name('iframe')[0])
-        # self.driver.switch_to.frame(1)
-        # logger.info('切换iframe成功')
-        # time.sleep(1)
+        self.click(self.booking_mgt_w)
+        time.sleep(1)
+        self.click(self.booking_by_awb_w)
+        time.sleep(1)
+        self.driver.switch_to.frame(0)
+        self.click(self.close1)
+        self.driver.switch_to.frame(self.driver.find_element_by_tag_name('iframe')[0])
+        self.driver.switch_to.frame(1)
+        logger.info('切换iframe成功')
+        time.sleep(1)
         awb_no = New_AwbNo()
         new_awbno1 = awb_no.new_awbno()
         time.sleep(1)
+        # self.driver.find_element_by_xpath('//*[@id="ydh"]').send_keys(new_awbno1)
         self.type(self.awbno_w, new_awbno1)
-        # self.click(self.awbno_w)
         time.sleep(1)
         self.type(self.dep_w, 'KMG')
         time.sleep(1)
@@ -75,11 +77,33 @@ class W_Booking_By_Awb(Base_page):
         time.sleep(1)
         self.click(self.packingtype_w)
         time.sleep(1)
-        self.click(self.precision_packaging_w)
+        # 点击包装类型
+        # # self.click(self.precision_packaging_w)
+        # self.driver.find_element_by_xpath('//*[@id="bzlx"]')
+        # logger.info('点击包装类型输入框')
+        # # ab = self.driver.find_element_by_id('bzlx')
+        # # ab.find_element_by_xpath('//option[@value="bzlx_002"]').click()
+        # self.driver.find_element_by_id("cardType").select_by_value('bzlx_002')
+        # # self.driver.find_element_by_xpath('//option[@value="bzlx_002"]').click()
+        # s = Select(self.driver.find_element_by_id("bzlx"))
+        # logger.info('定位select框架')
+        # s.select_by_visible_text('精包装')
+        # logger.info('定位下拉框内容')
+
+
+        js = "$('.精包装').parent('.listingBox_content').find('select.bzlx_002').click()"  # 使用js查找元素  选择产品
+        self.driver.implicitly_wait(5)
+        self.driver.execute_script(js)
+
+        # s.select_by_value("bzlx_002")
         time.sleep(1)
         self.click(self.declaration_type_w)
         time.sleep(1)
-        self.click(self.general_trade_w)
+        # self.click(self.general_trade_w)
+        self.driver.find_element_by_xpath('//*[@id="kjbg"]')
+        # ac = self.driver.find_element_by_id('kjbg')
+        # ac.find_element_by_xpath('//option[@value="KJBG002"]').click()
+        self.driver.find_element_by_xpath('//option[@value="KJBG002"]').click()
         time.sleep(1)
         self.type(self.memo_w, '测试')
         time.sleep(1)
