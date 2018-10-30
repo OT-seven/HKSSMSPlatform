@@ -16,7 +16,7 @@ class w_login(unittest.TestCase):
         w_login = W_Login(self.driver)
         w_login.w_login()
         logger.info('login')
-        time.sleep(10)
+        time.sleep(1)
     def tearDown(self):
         self.driver.close()
         logger.info('close browser')

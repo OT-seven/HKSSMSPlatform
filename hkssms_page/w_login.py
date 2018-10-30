@@ -4,7 +4,7 @@ from framework.read_config import Read_config
 from framework.base_page import Base_page
 import time
 from selenium.common.exceptions import NoAlertPresentException
-
+import requests
 logger = Logger(logger='W_Login').getlogger()
 
 class W_Login(Base_page):
@@ -20,6 +20,18 @@ class W_Login(Base_page):
         password = Read_config.read_password('pwd')
         self.type(self.password_w, password)
         time.sleep(10)
+        # js 代码获取session中验证码值
+        js = "var myName='<%=session.getAttribute(\"codeValidate\")%>'"
+        self.driver.implicitly_wait(1)
+        a = self.driver.execute_script(js)
+        print(a)
+        # 使用requests方法获取session中的值
+        # s = requests.Session()
+        # print(s)
+        # a = s.get("http://10.1.2.194:4029/hkssms/login.jsp")
+        # print(a)
+        # b = a.text
+        # print(b)
         self.click(self.login_btn_w)
         logger.info('click login btn')
         time.sleep(2)
